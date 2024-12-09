@@ -1,5 +1,6 @@
 from math import floor
 import os
+from random import random
 
 
 class Board:
@@ -10,14 +11,18 @@ class Board:
         self.board = [[char for i in range(self.width)]
                       for j in range(self.height)]
 
-    def clear_board(self):
+    def clear_board(self, char: str):
+        self.board = [[char for i in range(self.width)]
+                      for j in range(self.height)]
+
+    def clear_screen(self):
         if os.name == "nt":
             os.system("cls")
         else:
             os.system("clear")
 
     def show_board(self):
-        self.clear_board()
+        self.clear_screen()
         for i in range(self.width + 2):
             print("--", end="\t")
 
@@ -32,6 +37,7 @@ class Board:
         print("")
         for i in range(self.width + 2):
             print("--", end="\t")
+        print("")
 
     def change_cell_char(self, x: int, y: int, char: str):
         if x < 0 or y < 0 or x > self.width or y > self.height:
@@ -44,3 +50,9 @@ class Board:
             raise IndexError(f"Values are out of bounds {x} {y}")
 
         return self.board[self.height - floor(y) - 1][round(x)]
+
+    def fill_board(self, treshold: float):
+        for i in range(self.width):
+            for j in range(self.height):
+                if random() > treshold:
+                    self.change_cell_char(i, j, "1")

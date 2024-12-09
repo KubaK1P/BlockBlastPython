@@ -1,19 +1,21 @@
 from board import Board
-from random import random
-
+from shapedisplay import ShapeDisplay
+from shape import Shape
+from random import randint
 board: Board = Board(".")
 
 
-def fill_board(board_inst: Board, treshold: float):
-    for i in range(board_inst.width):
-        for j in range(board_inst.height):
-            if random() > treshold:
-                board_inst.change_cell_char(i, j, "1")
+def populate_choices() -> ShapeDisplay:
+    return ShapeDisplay([Shape(randint(0, 6)), Shape(randint(0, 6)), Shape(randint(0, 6))])
+
+
+shape_display: ShapeDisplay = populate_choices()
 
 
 def main():
-    fill_board(board, 0.5)
+    board.fill_board(0.5)
     board.show_board()
+    shape_display.print_shapes()
 
 
 if __name__ == "__main__":
