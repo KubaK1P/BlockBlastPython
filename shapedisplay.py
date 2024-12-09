@@ -12,6 +12,7 @@ class ShapeDisplay:
         self.shape_middle = shapes[1]
         self.shape_right = shapes[2]
 
+    # add linijki
     def print_shapes(self):
         for i in range(len(self.shape_left.shape)):
             for j in range(len(self.shape_left.shape[i])):
