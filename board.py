@@ -75,7 +75,7 @@ class Board:
                     self.set_cell_char(i, j, "1", True)
                     self.set_cell_char(i, j, "1", False)
 
-    def show_shape(self, sd: ShapeDisplay, n: int, x: int, y: int):
+    def show_shape(self, sd: ShapeDisplay, n: int):
         # get the chosen Shape object
         chosen_shape: Shape
         match n:
@@ -88,6 +88,20 @@ class Board:
             case _:
                 raise IndexError("Specify value between 1 and 3")
         print(f"Width: {chosen_shape.width}, Height: {chosen_shape.height}")
+
         # show the shape on the board at (x, y)
-        self.set_cell_char(x, y, "+", False)
+
+        for i in range(len(chosen_shape.shape)):
+            for j in range(len(chosen_shape.shape[0])):
+
+                base_row = self.shape_y + i
+                base_col = self.shape_x + j
+
+                # is_in_bounds = 0 <= base_row < len(self.board) and 0 <= base_col < len(self.board[0])
+
+                if 0 <= base_row < len(self.board) and 0 <= base_col < len(self.board[0]):
+                    if str(chosen_shape.shape[i][j]) == "1":
+                        self.board[base_row][base_col] = "+"
+                    else:
+                        continue
         self.show_board(False)

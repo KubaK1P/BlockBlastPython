@@ -16,7 +16,7 @@ def main():
     board.fill_board(0.5)
     board.show_board(True)
     shape_display.print_shapes()
-    board.show_shape(shape_display, 1, board.shape_x, board.shape_y)
+    board.show_shape(shape_display, 1)
 
 
 if __name__ == "__main__":
