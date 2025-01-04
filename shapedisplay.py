@@ -27,3 +27,14 @@ class ShapeDisplay:
                                  else " \t" for b in self.right.shape[i - 1]])
         for line in lines:
             print(line)
+
+    def remove_shape(self, n: int):
+        match n:
+            case 1:
+                self.left = Shape(-1)
+            case 2:
+                self.middle = Shape(-1)
+            case 3:
+                self.right = Shape(-1)
+            case _:
+                print("Provide a value between 1 and 3")
