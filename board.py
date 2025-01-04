@@ -13,6 +13,8 @@ class Board:
                             for j in range(self.height)]
         self.board = [[char for i in range(self.width)]
                       for j in range(self.height)]
+        self.shape_x = 0
+        self.shape_y = 0
 
     def clear_board(self, char: str):
         self.board_state = [[char for i in range(self.width)]
@@ -85,7 +87,7 @@ class Board:
                 chosen_shape = sd.right
             case _:
                 raise IndexError("Specify value between 1 and 3")
-        print(chosen_shape.shape)
+        print(f"Width: {chosen_shape.width}, Height: {chosen_shape.height}")
         # show the shape on the board at (x, y)
         self.set_cell_char(x, y, "+", False)
         self.show_board(False)
