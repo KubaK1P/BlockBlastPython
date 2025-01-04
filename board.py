@@ -14,8 +14,8 @@ class Board:
                             for j in range(self.height)]
         self.board = [[char for i in range(self.width)]
                       for j in range(self.height)]
-        self.shape_x = 0
-        self.shape_y = 0
+        self.shape_x = 3
+        self.shape_y = 3
 
     def clear_board(self, char: str):
         self.board_state = [[char for i in range(self.width)]
@@ -82,7 +82,7 @@ class Board:
         else:
             self.board = deepcopy(self.board_state)
 
-    def show_shape(self, sd: ShapeDisplay, n: int):
+    def choose_shape(self, sd: ShapeDisplay, n: int) -> Shape:
         # get the chosen Shape object
         chosen_shape: Shape
         match n:
@@ -94,7 +94,10 @@ class Board:
                 chosen_shape = sd.right
             case _:
                 raise IndexError("Specify value between 1 and 3")
+        return chosen_shape
 
+    def show_shape(self, sd: ShapeDisplay, n: int):
+        chosen_shape = self.choose_shape(sd, n)
         # show the shape on the board at (x, y)
         try:
             if self.shape_x + chosen_shape.width > self.width:
@@ -107,13 +110,71 @@ class Board:
 
                     base_row = self.shape_y + i
                     base_col = self.shape_x + j
-
-                    if 0 <= base_row < len(self.board) and 0 <= base_col < len(self.board[0]):
+                    row_condition = 0 <= base_row < len(self.board)
+                    column_condition = 0 <= base_col < len(self.board[0])
+                    if row_condition and column_condition:
                         if str(chosen_shape.shape[i][j]) == "1":
-                            self.board[base_row][base_col] = "+"
+                            if self.get_cell_char(base_col, base_row, True) == "1":
+                                self.board[base_row][base_col] = "x"
+                            else:
+                                self.board[base_row][base_col] = "+"
                         else:
                             continue
             self.show_board(False)
             self.sync_boards(False)
         except IndexError:
             self.sync_boards(False)
+
+    def place_shape(self, sd: ShapeDisplay, n: int):
+        chosen_shape = self.choose_shape(sd, n)
+        # place the selected shape
+        try:
+            if self.shape_x + chosen_shape.width > self.width:
+                raise IndexError(f"Out of range value shape_x: {self.shape_x}")
+            if self.shape_y + chosen_shape.height > self.height:
+                raise IndexError(f"Out of range value shape_x: {self.shape_x}")
+
+            for i in range(len(chosen_shape.shape)):
+                for j in range(len(chosen_shape.shape[0])):
+
+                    base_row = self.shape_y + i
+                    base_col = self.shape_x + j
+                    row_condition = 0 <= base_row < len(self.board)
+                    column_condition = 0 <= base_col < len(self.board[0])
+                    if row_condition and column_condition:
+                        if str(chosen_shape.shape[i][j]) == "1":
+                            if self.get_cell_char(base_col, base_row, True) == "1":
+                                self.board[base_row][base_col] = "x"
+                            else:
+                                self.board[base_row][base_col] = "+"
+                        else:
+                            continue
+
+            invalid = False
+            for row in self.board:
+                if "x" in row:
+                    invalid = True
+                    self.sync_boards(False)
+                    raise ValueError("Move not valid")
+
+            for i in range(len(chosen_shape.shape)):
+                for j in range(len(chosen_shape.shape[0])):
+
+                    base_row = self.shape_y + i
+                    base_col = self.shape_x + j
+                    row_condition = 0 <= base_row < len(self.board)
+                    column_condition = 0 <= base_col < len(self.board[0])
+                    if row_condition and column_condition:
+                        if not invalid:
+                            if str(chosen_shape.shape[i][j]) == "1":
+                                self.board_state[base_row][base_col] = "1"
+                            else:
+                                continue
+                        else:
+                            break
+            self.sync_boards(False)
+            self.show_board(False)
+        except IndexError:
+            self.sync_boards(False)
+        except ValueError:
+            self.show_board(False)

@@ -13,10 +13,23 @@ shape_display: ShapeDisplay = populate_choices()
 
 
 def main():
-    board.fill_board(0.5)
-    board.show_board(False)
-    shape_display.print_shapes()
-    board.show_shape(shape_display, 2)
+    board.fill_board(0.9)
+    for i in range(3):
+        board.show_board(False)
+        shape_display.print_shapes()
+        chosen_shape_no = int(input("Choose your shape (1, 2 or 3)"))
+        board.show_shape(shape_display, chosen_shape_no)
+        pos_x = int(input("Move the shape (x)"))
+        pos_y = int(input("Move the shape (y)"))
+        board.shape_x = pos_x
+        board.shape_y = pos_y
+        board.show_shape(shape_display, chosen_shape_no)
+        confirm = int(input("Enter 1 to confirm, 0 to cancel"))
+        if not confirm:
+            board.sync_boards(False)
+        else:
+            board.place_shape(shape_display, chosen_shape_no)
+            board.shape_x, board.shape_y = 0, 0
 
 
 if __name__ == "__main__":
