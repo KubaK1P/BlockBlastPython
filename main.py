@@ -14,9 +14,9 @@ shape_display: ShapeDisplay = populate_choices()
 
 def main():
     board.fill_board(0.5)
-    board.show_board(True)
+    board.show_board(False)
     shape_display.print_shapes()
-    board.show_shape(shape_display, 1)
+    board.show_shape(shape_display, 2)
 
 
 if __name__ == "__main__":
