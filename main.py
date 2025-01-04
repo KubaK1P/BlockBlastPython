@@ -6,7 +6,7 @@ board: Board = Board(".")
 
 
 def populate_choices() -> ShapeDisplay:
-    return ShapeDisplay([Shape(randint(0, 7)), Shape(randint(0, 7)), Shape(randint(0, 7))])
+    return ShapeDisplay([Shape(randint(0, 7)) for n in range(3)])
 
 
 shape_display: ShapeDisplay = populate_choices()
@@ -17,7 +17,6 @@ def main():
     board.show_board(True)
     shape_display.print_shapes()
     board.show_shape(shape_display, 1, 3, 5)
-    board.show_board(True)
 
 
 if __name__ == "__main__":

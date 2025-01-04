@@ -50,7 +50,7 @@ class Board:
             print("--", end="\t")
         print("")
 
-    def set_cell_char(self, x: int, y: int, char: str, force: bool):
+    def set_cell_char(self, x: int, y: int, char: str, force=False):
         if x < 0 or y < 0 or x > self.width or y > self.height:
             raise IndexError(f"Values are out of bounds {x} {y}")
         if force:
@@ -58,7 +58,7 @@ class Board:
         else:
             self.board[y][x] = char
 
-    def get_cell_char(self, x: int, y: int, force: bool) -> str | None:
+    def get_cell_char(self, x: int, y: int, force=False) -> str | None:
         if x < 0 or y < 0 or x > self.width or y > self.height:
             raise IndexError(f"Values are out of bounds {x} {y}")
         if force:
@@ -89,4 +89,3 @@ class Board:
         # show the shape on the board at (x, y)
         self.set_cell_char(x, y, "+", False)
         self.show_board(False)
-        print(f"True: {self.board_state}, False: {self.board}")

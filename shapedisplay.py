@@ -20,10 +20,10 @@ class ShapeDisplay:
             lines[i] += "".join(["+\t" if b ==
                                  1 else " \t" for b in self.left.shape[i - 1]])
             lines[i] += "|\t"
-            lines[i] += "".join(["+\t" if b ==
-                                 1 else " \t" for b in self.middle.shape[i - 1]])
+            lines[i] += "".join(["+\t" if b == 1
+                                 else " \t" for b in self.middle.shape[i - 1]])
             lines[i] += "|\t"
-            lines[i] += "".join(["+\t" if b ==
-                                 1 else " \t" for b in self.right.shape[i - 1]])
+            lines[i] += "".join(["+\t" if b == 1
+                                 else " \t" for b in self.right.shape[i - 1]])
         for line in lines:
             print(line)
